@@ -155,6 +155,40 @@ class FGMembersite
 		
 	}
 	
+	function validateemail($loginemail,$loginpassword)
+        {
+		if(!$this->DBLogin())
+        {
+			$this->HandleError("Database login failed!");
+			return false;
+		}
+	    $decpassword=md5($loginpassword);	
+        $ar = [] ;
+		
+		
+	    $qry = 'Select * from applicants where applicantsemail="'.$loginemail.'" and applicantpassword="'.$decpassword.'"';
+		
+		
+        $result = mysqli_query($this->connection,$qry);
+        
+        if(!$result || mysqli_num_rows($result) <= 0)
+        {
+           mysqli_close($this->connection);
+           return false;
+        
+        }  else 
+        
+        {
+          while($row = mysqli_fetch_assoc($result))
+          {
+              array_push($ar, $row);  
+          }
+		  mysqli_close($this->connection);
+		  return $ar;      
+		}
+		
+	}
+	
 
 
 }
