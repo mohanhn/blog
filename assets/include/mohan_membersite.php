@@ -38,6 +38,10 @@ class FGMembersite
         
         return true;
     }
+	
+
+
+
 	function RedirectToURL($url)
     {
         header("Location: $url");
